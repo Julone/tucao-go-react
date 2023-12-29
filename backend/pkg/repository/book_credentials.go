@@ -1,12 +1,12 @@
 package repository
 
 const (
-	// BookCreateCredential const for create a new book.
-	BookCreateCredential string = "book:create"
+	// productCreateCredential const for create a new product.
+	ProductCreateCredential string = "product:create"
 
-	// BookCreateCredential const for update book.
-	BookUpdateCredential string = "book:update"
+	// ProductCreateCredential const for update product.
+	ProductUpdateCredential string = "product:update"
 
-	// BookCreateCredential const for delete book.
-	BookDeleteCredential string = "book:delete"
+	// ProductCreateCredential const for delete product.
+	ProductDeleteCredential string = "product:delete"
 )

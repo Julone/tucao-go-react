@@ -16,14 +16,14 @@
     },
     "basePath": "/api",
     "paths": {
-        "/v1/book": {
+        "/v1/product": {
             "put": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Update book.",
+                "description": "Update product.",
                 "consumes": [
                     "application/json"
                 ],
@@ -31,12 +31,12 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Book"
+                    "Product"
                 ],
-                "summary": "update book",
+                "summary": "update product",
                 "parameters": [
                     {
-                        "description": "Book ID",
+                        "description": "Product ID",
                         "name": "id",
                         "in": "body",
                         "required": true,
@@ -72,8 +72,8 @@
                         }
                     },
                     {
-                        "description": "Book status",
-                        "name": "book_status",
+                        "description": "Product status",
+                        "name": "product_status",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -81,12 +81,12 @@
                         }
                     },
                     {
-                        "description": "Book attributes",
-                        "name": "book_attrs",
+                        "description": "Product attributes",
+                        "name": "product_attrs",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.BookAttrs"
+                            "$ref": "#/definitions/models.ProductAttrs"
                         }
                     }
                 ],
@@ -105,7 +105,7 @@
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Create a new book.",
+                "description": "Create a new product.",
                 "consumes": [
                     "application/json"
                 ],
@@ -113,9 +113,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Book"
+                    "Product"
                 ],
-                "summary": "create a new book",
+                "summary": "create a new product",
                 "parameters": [
                     {
                         "description": "Title",
@@ -145,12 +145,12 @@
                         }
                     },
                     {
-                        "description": "Book attributes",
-                        "name": "book_attrs",
+                        "description": "Product attributes",
+                        "name": "product_attrs",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.BookAttrs"
+                            "$ref": "#/definitions/models.ProductAttrs"
                         }
                     }
                 ],
@@ -158,7 +158,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Book"
+                            "$ref": "#/definitions/models.Product"
                         }
                     }
                 }
@@ -169,7 +169,7 @@
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Delete book by given ID.",
+                "description": "Delete product by given ID.",
                 "consumes": [
                     "application/json"
                 ],
@@ -177,12 +177,12 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Book"
+                    "Product"
                 ],
-                "summary": "delete book by given ID",
+                "summary": "delete product by given ID",
                 "parameters": [
                     {
-                        "description": "Book ID",
+                        "description": "Product ID",
                         "name": "id",
                         "in": "body",
                         "required": true,
@@ -201,9 +201,9 @@
                 }
             }
         },
-        "/v1/book/{id}": {
+        "/v1/product/{id}": {
             "get": {
-                "description": "Get book by given ID.",
+                "description": "Get product by given ID.",
                 "consumes": [
                     "application/json"
                 ],
@@ -211,13 +211,13 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Book"
+                    "Product"
                 ],
-                "summary": "get book by given ID",
+                "summary": "get product by given ID",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Book ID",
+                        "description": "Product ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -227,15 +227,15 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Book"
+                            "$ref": "#/definitions/models.Product"
                         }
                     }
                 }
             }
         },
-        "/v1/books": {
+        "/v1/products": {
             "get": {
-                "description": "Get all exists books.",
+                "description": "Get all exists products.",
                 "consumes": [
                     "application/json"
                 ],
@@ -243,16 +243,16 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Books"
+                    "products"
                 ],
-                "summary": "get all exists books",
+                "summary": "get all exists products",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Book"
+                                "$ref": "#/definitions/models.Product"
                             }
                         }
                     }
@@ -423,34 +423,39 @@
         }
     },
     "definitions": {
-        "models.Book": {
+        "models.Product": {
             "type": "object",
             "required": [
                 "author",
-                "book_attrs",
-                "book_status",
                 "id",
+                "product_attrs",
+                "product_status",
                 "title",
                 "user_id"
             ],
             "properties": {
                 "author": {
-                    "type": "string"
-                },
-                "book_attrs": {
-                    "$ref": "#/definitions/models.BookAttrs"
-                },
-                "book_status": {
-                    "type": "integer"
+                    "type": "string",
+                    "maxLength": 255
                 },
                 "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
                     "type": "string"
                 },
                 "id": {
                     "type": "string"
                 },
+                "product_attrs": {
+                    "$ref": "#/definitions/models.ProductAttrs"
+                },
+                "product_status": {
+                    "type": "integer"
+                },
                 "title": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 255
                 },
                 "updated_at": {
                     "type": "string"
@@ -460,7 +465,7 @@
                 }
             }
         },
-        "models.BookAttrs": {
+        "models.ProductAttrs": {
             "type": "object",
             "properties": {
                 "description": {
@@ -470,7 +475,9 @@
                     "type": "string"
                 },
                 "rating": {
-                    "type": "integer"
+                    "type": "integer",
+                    "maximum": 10,
+                    "minimum": 1
                 }
             }
         },
@@ -487,20 +494,26 @@
                 "created_at": {
                     "type": "string"
                 },
-                "email": {
+                "deleted_at": {
                     "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "maxLength": 255
                 },
                 "id": {
                     "type": "string"
                 },
                 "password_hash": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 255
                 },
                 "updated_at": {
                     "type": "string"
                 },
                 "user_role": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 25
                 },
                 "user_status": {
                     "type": "integer"

@@ -1,18 +1,22 @@
 basePath: /api
 definitions:
-  models.Book:
+  models.Product:
     properties:
       author:
+        maxLength: 255
         type: string
-      book_attrs:
-        $ref: '#/definitions/models.BookAttrs'
-      book_status:
-        type: integer
       created_at:
+        type: string
+      deleted_at:
         type: string
       id:
         type: string
+      product_attrs:
+        $ref: '#/definitions/models.ProductAttrs'
+      product_status:
+        type: integer
       title:
+        maxLength: 255
         type: string
       updated_at:
         type: string
@@ -20,34 +24,41 @@ definitions:
         type: string
     required:
     - author
-    - book_attrs
-    - book_status
     - id
+    - product_attrs
+    - product_status
     - title
     - user_id
     type: object
-  models.BookAttrs:
+  models.ProductAttrs:
     properties:
       description:
         type: string
       picture:
         type: string
       rating:
+        maximum: 10
+        minimum: 1
         type: integer
     type: object
   models.User:
     properties:
       created_at:
         type: string
+      deleted_at:
+        type: string
       email:
+        maxLength: 255
         type: string
       id:
         type: string
       password_hash:
+        maxLength: 255
         type: string
       updated_at:
         type: string
       user_role:
+        maxLength: 25
         type: string
       user_status:
         type: integer
@@ -70,13 +81,13 @@ info:
   title: API
   version: "1.0"
 paths:
-  /v1/book:
+  /v1/product:
     delete:
       consumes:
       - application/json
-      description: Delete book by given ID.
+      description: Delete product by given ID.
       parameters:
-      - description: Book ID
+      - description: Product ID
         in: body
         name: id
         required: true
@@ -91,13 +102,13 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: delete book by given ID
+      summary: delete product by given ID
       tags:
-      - Book
+      - Product
     post:
       consumes:
       - application/json
-      description: Create a new book.
+      description: Create a new product.
       parameters:
       - description: Title
         in: body
@@ -117,30 +128,30 @@ paths:
         required: true
         schema:
           type: string
-      - description: Book attributes
+      - description: Product attributes
         in: body
-        name: book_attrs
+        name: product_attrs
         required: true
         schema:
-          $ref: '#/definitions/models.BookAttrs'
+          $ref: '#/definitions/models.ProductAttrs'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Book'
+            $ref: '#/definitions/models.Product'
       security:
       - ApiKeyAuth: []
-      summary: create a new book
+      summary: create a new product
       tags:
-      - Book
+      - Product
     put:
       consumes:
       - application/json
-      description: Update book.
+      description: Update product.
       parameters:
-      - description: Book ID
+      - description: Product ID
         in: body
         name: id
         required: true
@@ -164,18 +175,18 @@ paths:
         required: true
         schema:
           type: string
-      - description: Book status
+      - description: Product status
         in: body
-        name: book_status
+        name: product_status
         required: true
         schema:
           type: integer
-      - description: Book attributes
+      - description: Product attributes
         in: body
-        name: book_attrs
+        name: product_attrs
         required: true
         schema:
-          $ref: '#/definitions/models.BookAttrs'
+          $ref: '#/definitions/models.ProductAttrs'
       produces:
       - application/json
       responses:
@@ -185,16 +196,16 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: update book
+      summary: update product
       tags:
-      - Book
-  /v1/book/{id}:
+      - Product
+  /v1/product/{id}:
     get:
       consumes:
       - application/json
-      description: Get book by given ID.
+      description: Get product by given ID.
       parameters:
-      - description: Book ID
+      - description: Product ID
         in: path
         name: id
         required: true
@@ -205,15 +216,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Book'
-      summary: get book by given ID
+            $ref: '#/definitions/models.Product'
+      summary: get product by given ID
       tags:
-      - Book
-  /v1/books:
+      - Product
+  /v1/products:
     get:
       consumes:
       - application/json
-      description: Get all exists books.
+      description: Get all exists products.
       produces:
       - application/json
       responses:
@@ -221,11 +232,11 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Book'
+              $ref: '#/definitions/models.Product'
             type: array
-      summary: get all exists books
+      summary: get all exists products
       tags:
-      - Books
+      - products
   /v1/token/renew:
     post:
       consumes:

@@ -2,15 +2,15 @@ package main
 
 import (
 	"os"
-
-	"github.com/create-go-app/fiber-go-template/pkg/configs"
-	"github.com/create-go-app/fiber-go-template/pkg/middleware"
-	"github.com/create-go-app/fiber-go-template/pkg/routes"
-	"github.com/create-go-app/fiber-go-template/pkg/utils"
+	"tuxiaocao/configs"
+	"tuxiaocao/middleware"
+	routes2 "tuxiaocao/routes"
+	"tuxiaocao/setup"
+	"tuxiaocao/utils"
 
 	"github.com/gofiber/fiber/v2"
 
-	_ "github.com/create-go-app/fiber-go-template/docs" // load API Docs files (Swagger)
+	_ "tuxiaocao/docs" // load API Docs files (Swagger)
 
 	_ "github.com/joho/godotenv/autoload" // load .env file automatically
 )
@@ -30,18 +30,15 @@ import (
 func main() {
 	// Define Fiber config.
 	config := configs.FiberConfig()
-
-	// Define a new Fiber app with config.
+	setup.InitAll("logger", "mysql")
+	// Define a new Fiber service with config.
 	app := fiber.New(config)
 
 	// Middlewares.
-	middleware.FiberMiddleware(app) // Register Fiber's middleware for app.
+	middleware.FiberMiddleware(app) // Register Fiber's middleware for service.
 
 	// Routes.
-	routes.SwaggerRoute(app)  // Register a route for API Docs (Swagger).
-	routes.PublicRoutes(app)  // Register a public routes for app.
-	routes.PrivateRoutes(app) // Register a private routes for app.
-	routes.NotFoundRoute(app) // Register route for 404 Error.
+	routes2.PublicRoutes(app) // Register a public routes for service.
 
 	// Start server (with or without graceful shutdown).
 	if os.Getenv("STAGE_STATUS") == "dev" {
