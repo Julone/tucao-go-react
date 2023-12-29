@@ -1,0 +1,14 @@
+2023-12-29T22:29:59.926+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:29:59.926+0800	PANIC	mysql is error error, not connected to database, Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+2023-12-29T22:30:29.948+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:30:29.948+0800	PANIC	mysql is error error, not connected to database, Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+2023-12-29T22:30:32.367+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:30:32.368+0800	PANIC	mysql is error error, not connected to database, Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+2023-12-29T22:46:04.434+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:46:04.434+0800	PANIC	mysql is error error, not connected to database, Error 1049 (42000): Unknown database 'tuxiaocao'
+2023-12-29T22:46:36.250+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:47:37.436+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:48:11.069+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:49:07.939+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:49:46.907+0800	INFO	fasjdklfjasdklfjaksdl
+2023-12-29T22:50:18.521+0800	INFO	fasjdklfjasdklfjaksdl
