@@ -41,3 +41,16 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
+    - name: CINotify Email
+    # You may pin to the exact commit or the version.
+    # uses: cinotify/github-action@54636e4cba2c7409a15a7061dcfb9af9eae18672
+      uses: cinotify/github-action@v1.4.0
+      with: 
+      # Recipient email address
+        to: julone@qq.com
+      # Email subject
+        subject: asdf 
+      # Email body
+        body: 构建go应用功能
+      # Email attachment
+        attachment: 水电费
