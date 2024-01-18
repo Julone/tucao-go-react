@@ -32,15 +32,7 @@ jobs:
       with:
         name: dist
         path: ./tuxiaocao
-
-    - name: Deploy to GitHub Pages (部署到 GitHub Pages)
-      uses: peaceiris/actions-gh-pages@v3
-      # en: Only deploy when the push event of the master branch is triggered
-      # zh: 仅在触发 master 分支的 push 事件时部署
-      if: github.ref == 'refs/heads/master'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+        
     - name: CINotify Email
     # You may pin to the exact commit or the version.
     # uses: cinotify/github-action@54636e4cba2c7409a15a7061dcfb9af9eae18672
@@ -53,4 +45,4 @@ jobs:
       # Email body
         body: 构建go应用功能
       # Email attachment
-        attachment: 水电费
+        attachment: ./tuxiaocao
