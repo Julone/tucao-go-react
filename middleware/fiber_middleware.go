@@ -14,5 +14,6 @@ func FiberMiddleware(a *fiber.App) {
 		cors.New(),
 		// Add simple logger.
 		logger.New(),
+		Maintenance,
 	)
 }

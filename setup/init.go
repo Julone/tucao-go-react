@@ -10,12 +10,12 @@ import (
 
 func ReadyDatabase() {
 	// database init
-	db, err := database.OpenDBConnection()
+	_, err := database.OpenDBConnection()
 	if err != nil {
 		logger.Log.Panicf("mysql is error %v", err)
 	}
 
-	err = db.AutoMigrate(models2.Product{}, models2.User{})
+	err = database.DB.AutoMigrate(models2.Product{}, models2.User{})
 	if err != nil {
 		logger.Log.Errorf("mysql migrate is error %v", err)
 	}

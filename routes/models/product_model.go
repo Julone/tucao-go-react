@@ -9,11 +9,10 @@ import (
 
 // Product struct to describe product object.
 type Product struct {
-	ID            uuid.UUID    `gorm:"column:id" json:"id" `
-	UserID        uuid.UUID    `gorm:"column:user_id" json:"user_id" `
-	UserInfo      User         `gorm:"foreignKey:ID" json:"user_info" validate:"-"`
+	ID            uuid.UUID    `gorm:"column:id;type:bigint;not null;primaryKey;auto_increment" json:"id" `
+	UserID        string       `gorm:"column:user_id" json:"user_id" `
 	Title         string       `gorm:"column:title" json:"title" validate:"required,lte=255"`
-	Author        string       `gorm:"column:author" json:"author" validate:"required,lte=255"`
+	Author        string       `gorm:"column:author" json:"author" validae:"required,lte=255"`
 	ProductStatus int          `gorm:"column:product_status" json:"product_status" validate:"required,len=1"`
 	ProductAttrs  ProductAttrs `gorm:"column:product_attrs;type:json" json:"product_attrs"`
 	BaseDbTime

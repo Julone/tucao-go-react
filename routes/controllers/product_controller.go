@@ -254,7 +254,7 @@ func Updateproduct(c *fiber.Ctx) error {
 	userID := claims.UserID
 
 	// Only the creator can delete his product.
-	if foundedproduct.UserID == userID {
+	if string(foundedproduct.UserID) == userID {
 		// Set initialized default data for product:
 		product.UpdatedAt = time.Now()
 

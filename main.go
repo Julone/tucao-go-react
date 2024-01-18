@@ -1,9 +1,11 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"os"
 	"tuxiaocao/configs"
 	"tuxiaocao/middleware"
+	"tuxiaocao/pkg/logger"
 	routes2 "tuxiaocao/routes"
 	"tuxiaocao/setup"
 	"tuxiaocao/utils"
@@ -28,6 +30,10 @@ import (
 // @in header
 // @name Authorization
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		panic("config is not load" + err.Error())
+	}
 	// Define Fiber config.
 	config := configs.FiberConfig()
 	setup.InitAll("logger", "mysql")
@@ -36,7 +42,6 @@ func main() {
 
 	// Middlewares.
 	middleware.FiberMiddleware(app) // Register Fiber's middleware for service.
-
 	// Routes.
 	routes2.PublicRoutes(app) // Register a public routes for service.
 

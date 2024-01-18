@@ -9,7 +9,6 @@ import (
 	utils2 "tuxiaocao/utils"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
 
 // UserSignUp method to create a new user.
@@ -18,7 +17,7 @@ import (
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param email body string true "Email"
+// @Param username body string true "Username"
 // @Param password body string true "Password"
 // @Param user_role body string true "User role"
 // @Success 200 {object} models.User
@@ -49,7 +48,7 @@ func UserSignUp(c *fiber.Ctx) error {
 	}
 
 	// Checking role from sign up data.
-	role, err := utils2.VerifyRole(signUp.UserRole)
+	role, err := utils2.VerifyRole("admin")
 	if err != nil {
 		// Return status 400 and error message.
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -62,9 +61,8 @@ func UserSignUp(c *fiber.Ctx) error {
 	user := &models.User{}
 
 	// Set initialized default data for user:
-	user.ID = uuid.New()
 	user.CreatedAt = time.Now()
-	user.Email = signUp.Email
+	user.Username = signUp.Username
 	user.PasswordHash = utils2.GeneratePassword(signUp.Password)
 	user.UserStatus = 1 // 0 == blocked, 1 == active
 	user.UserRole = role
@@ -104,7 +102,7 @@ func UserSignUp(c *fiber.Ctx) error {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param email body string true "User Email"
+// @Param username body string true "User Username"
 // @Param password body string true "User Password"
 // @Success 200 {string} status "ok"
 // @Router /v1/user/sign/in [post]
@@ -121,14 +119,14 @@ func UserSignIn(c *fiber.Ctx) error {
 		})
 	}
 
-	// Get user by email.
+	// Get user by username.
 	foundedUser := &models.User{}
-	err := models.NewUserRepo().Where("email = ?", signIn.Email).Scan(foundedUser)
+	err := models.NewUserRepo().Where("username = ?", signIn.Username).Scan(foundedUser)
 	if err != nil {
 		// Return, if user not found.
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"error": true,
-			"msg":   "user with the given email is not found",
+			"msg":   "user with the given username is not found",
 		})
 	}
 
@@ -138,7 +136,7 @@ func UserSignIn(c *fiber.Ctx) error {
 		// Return, if password is not compare to stored in database.
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": true,
-			"msg":   "wrong user email address or password",
+			"msg":   "wrong user username address or password",
 		})
 	}
 
@@ -153,7 +151,7 @@ func UserSignIn(c *fiber.Ctx) error {
 	}
 
 	// Generate a new pair of access and refresh tokens.
-	tokens, err := utils2.GenerateNewTokens(foundedUser.ID.String(), credentials)
+	tokens, err := utils2.GenerateNewTokens(string(foundedUser.ID), credentials)
 	if err != nil {
 		// Return status 500 and token generation error.
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -163,7 +161,7 @@ func UserSignIn(c *fiber.Ctx) error {
 	}
 
 	// Define user ID.
-	userID := foundedUser.ID.String()
+	userID := string(foundedUser.ID)
 
 	// Create a new Redis connection.
 	connRedis, err := cache.RedisConnection()
@@ -217,7 +215,7 @@ func UserSignOut(c *fiber.Ctx) error {
 	}
 
 	// Define user ID.
-	userID := claims.UserID.String()
+	userID := string(claims.UserID)
 
 	// Create a new Redis connection.
 	connRedis, err := cache.RedisConnection()

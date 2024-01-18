@@ -22,6 +22,7 @@ func OpenDBConnection() (db *gorm.DB, err error) {
 		db, err = MysqlConnection()
 	}
 	if err != nil {
+
 		return nil, err
 	}
 	DB = db

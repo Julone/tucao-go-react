@@ -320,7 +320,7 @@ const docTemplate = `{
                 "summary": "auth user and return access and refresh token",
                 "parameters": [
                     {
-                        "description": "User Email",
+                        "description": "User Username",
                         "name": "email",
                         "in": "body",
                         "required": true,
@@ -391,7 +391,7 @@ const docTemplate = `{
                 "summary": "create a new user",
                 "parameters": [
                     {
-                        "description": "Email",
+                        "description": "Username",
                         "name": "email",
                         "in": "body",
                         "required": true,

@@ -96,7 +96,7 @@ func RenewTokens(c *fiber.Ctx) error {
 		}
 
 		// Generate JWT Access & Refresh tokens.
-		tokens, err := utils2.GenerateNewTokens(userID.String(), credentials)
+		tokens, err := utils2.GenerateNewTokens(string(userID), credentials)
 		if err != nil {
 			// Return status 500 and token generation error.
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -116,7 +116,7 @@ func RenewTokens(c *fiber.Ctx) error {
 		}
 
 		// Save refresh token to Redis.
-		errRedis := connRedis.Set(context.Background(), userID.String(), tokens.Refresh, 0).Err()
+		errRedis := connRedis.Set(context.Background(), string(userID), tokens.Refresh, 0).Err()
 		if errRedis != nil {
 			// Return status 500 and Redis connection error.
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
