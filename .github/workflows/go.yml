@@ -36,7 +36,6 @@ jobs:
       uses: projectdiscovery/notify-action@main
       with:
         data: output.txt
-        provider-config: notify-config.yaml
     - name: CINotify Email
     # You may pin to the exact commit or the version.
     # uses: cinotify/github-action@54636e4cba2c7409a15a7061dcfb9af9eae18672
