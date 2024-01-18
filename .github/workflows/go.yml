@@ -44,5 +44,3 @@ jobs:
         subject: asdf 
       # Email body
         body: 构建go应用功能
-      # Email attachment
-        attachment: ./tuxiaocao
