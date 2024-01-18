@@ -5,7 +5,6 @@ import (
 	"os"
 	"tuxiaocao/configs"
 	"tuxiaocao/middleware"
-	"tuxiaocao/pkg/logger"
 	routes2 "tuxiaocao/routes"
 	"tuxiaocao/setup"
 	"tuxiaocao/utils"
