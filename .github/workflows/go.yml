@@ -1,0 +1,43 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+
+    - name: Build
+      run: go build .
+
+    - name: Test
+      run: go test .
+    
+    - name: Upload build artifacts (上传构建产物)
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: ./tuxiaocao
+
+    - name: Deploy to GitHub Pages (部署到 GitHub Pages)
+      uses: peaceiris/actions-gh-pages@v3
+      # en: Only deploy when the push event of the master branch is triggered
+      # zh: 仅在触发 master 分支的 push 事件时部署
+      if: github.ref == 'refs/heads/master'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
