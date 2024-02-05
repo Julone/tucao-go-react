@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"context"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 	"github.com/klauspost/compress/zip"
+	"github.com/segmentio/kafka-go"
 	"io"
 	"os"
 	"os/exec"
@@ -18,6 +20,13 @@ import (
 func PublicRoutes(app *fiber.App) {
 
 	pubRoute := app.Group("/api/v1")
+	pubRoute.Get("/", func(ctx *fiber.Ctx) error {
+		//ctx.Response().Header.Set("Cache-Control", "no-cache")
+		str := time.Now().Format(time.DateTime)
+
+		ctx.Send([]byte(str))
+		return nil
+	})
 	// Routes for GET method:
 	pubRoute.Get("/products", controllers2.Getproducts)   // get list of all products
 	pubRoute.Get("/product/:id", controllers2.Getproduct) // get one product by ID
@@ -35,6 +44,30 @@ func PublicRoutes(app *fiber.App) {
 	route.Put("/product", controllers2.Updateproduct) // update one product by ID
 	// Routes for DELETE method:
 	route.Delete("/product", controllers2.Deleteproduct) // delete one product by ID
+
+	route.Get("/kafka", func(ctx *fiber.Ctx) error {
+		topic := "my-topic"
+		partition := 0
+		// 连接至Kafka集群的Leader节点
+		conn, err := kafka.DialLeader(context.Background(), "tcp", "localhost:29092", topic, partition)
+		if err != nil {
+			logger.Log.Fatal("failed to dial leader:", err)
+		}
+		// 设置发送消息的超时时间
+		conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
+		// 发送消息
+		_, err = conn.WriteMessages(
+			kafka.Message{Value: []byte("one!")},
+			kafka.Message{Value: []byte("two!")},
+			kafka.Message{Value: []byte("three!")},
+		)
+		if err != nil {
+			logger.Log.Fatal("failed to write messages:", err)
+		}
+
+		return nil
+
+	})
 
 	route.Put("/update/Frontend", func(ctx *fiber.Ctx) error {
 		f, err := ctx.FormFile("file")

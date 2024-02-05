@@ -16,7 +16,8 @@ func FiberConfig() fiber.Config {
 
 	// Return Fiber configuration.
 	return fiber.Config{
-		ReadTimeout: time.Second * time.Duration(readTimeoutSecondsCount),
-		BodyLimit:   10 * 1024 * 1024 * 1024, //10gb
+		ReadTimeout:        time.Second * time.Duration(readTimeoutSecondsCount),
+		BodyLimit:          10 * 1024 * 1024 * 1024, //10gb
+		DisableDefaultDate: true,
 	}
 }

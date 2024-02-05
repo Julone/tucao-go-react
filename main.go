@@ -35,14 +35,14 @@ func main() {
 	}
 	// Define Fiber config.
 	config := configs.FiberConfig()
-	setup.InitAll("logger", "mysql")
+	setup.InitAll()
 	// Define a new Fiber service with config.
 	app := fiber.New(config)
-
 	// Middlewares.
 	middleware.FiberMiddleware(app) // Register Fiber's middleware for service.
 	// Routes.
 	routes2.PublicRoutes(app) // Register a public routes for service.
+	go middleware.HookupFromKafka()
 
 	// Start server (with or without graceful shutdown).
 	if os.Getenv("STAGE_STATUS") == "dev" {
@@ -50,4 +50,5 @@ func main() {
 	} else {
 		utils.StartServerWithGracefulShutdown(app)
 	}
+
 }
