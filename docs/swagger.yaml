@@ -3,7 +3,6 @@ definitions:
   models.Product:
     properties:
       author:
-        maxLength: 255
         type: string
       created_at:
         type: string
@@ -23,12 +22,8 @@ definitions:
       user_id:
         type: string
     required:
-    - author
-    - id
-    - product_attrs
     - product_status
     - title
-    - user_id
     type: object
   models.ProductAttrs:
     properties:
@@ -37,8 +32,6 @@ definitions:
       picture:
         type: string
       rating:
-        maximum: 10
-        minimum: 1
         type: integer
     type: object
   models.User:
@@ -47,11 +40,8 @@ definitions:
         type: string
       deleted_at:
         type: string
-      email:
-        maxLength: 255
-        type: string
       id:
-        type: string
+        type: integer
       password_hash:
         maxLength: 255
         type: string
@@ -62,12 +52,14 @@ definitions:
         type: string
       user_status:
         type: integer
+      username:
+        maxLength: 255
+        type: string
     required:
-    - email
-    - id
     - password_hash
     - user_role
     - user_status
+    - username
     type: object
 info:
   contact:
@@ -267,9 +259,9 @@ paths:
       - application/json
       description: Auth user and return access and refresh token.
       parameters:
-      - description: User Email
+      - description: User Username
         in: body
-        name: email
+        name: username
         required: true
         schema:
           type: string
@@ -312,9 +304,9 @@ paths:
       - application/json
       description: Create a new user.
       parameters:
-      - description: Email
+      - description: Username
         in: body
-        name: email
+        name: username
         required: true
         schema:
           type: string

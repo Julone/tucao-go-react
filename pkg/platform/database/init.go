@@ -17,7 +17,7 @@ func OpenDBConnection() (db *gorm.DB, err error) {
 	// Define a new Database connection with right DB type.
 	switch dbType {
 	case "pgx":
-		//db, err = PostgreSQLConnection()
+		db, err = PgSqlConnection()
 	case "mysql":
 		db, err = MysqlConnection()
 	}

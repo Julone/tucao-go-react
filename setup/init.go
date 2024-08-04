@@ -22,7 +22,7 @@ func ReadyDatabase() {
 		logger.Log.Panicf("mysql is error %v", err)
 	}
 
-	err = database.DB.AutoMigrate(models2.Product{}, models2.User{})
+	err = database.DB.AutoMigrate(models2.Product{}, models2.User{}, models2.LogRecord{})
 	if err != nil {
 		logger.Log.Errorf("mysql migrate is error %v", err)
 	}
@@ -87,7 +87,7 @@ func InitAll(Components ...string) {
 		case "etcd":
 			ReadyEtcd()
 		default:
-			fmt.Printf("asdfasf")
+			fmt.Printf("all ready")
 		}
 	}
 }

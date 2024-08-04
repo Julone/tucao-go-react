@@ -321,7 +321,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "User Username",
-                        "name": "email",
+                        "name": "username",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -392,7 +392,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "Username",
-                        "name": "email",
+                        "name": "username",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -433,17 +433,12 @@ const docTemplate = `{
         "models.Product": {
             "type": "object",
             "required": [
-                "author",
-                "id",
-                "product_attrs",
                 "product_status",
-                "title",
-                "user_id"
+                "title"
             ],
             "properties": {
                 "author": {
-                    "type": "string",
-                    "maxLength": 255
+                    "type": "string"
                 },
                 "created_at": {
                     "type": "string"
@@ -482,20 +477,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "rating": {
-                    "type": "integer",
-                    "maximum": 10,
-                    "minimum": 1
+                    "type": "integer"
                 }
             }
         },
         "models.User": {
             "type": "object",
             "required": [
-                "email",
-                "id",
                 "password_hash",
                 "user_role",
-                "user_status"
+                "user_status",
+                "username"
             ],
             "properties": {
                 "created_at": {
@@ -504,12 +496,8 @@ const docTemplate = `{
                 "deleted_at": {
                     "type": "string"
                 },
-                "email": {
-                    "type": "string",
-                    "maxLength": 255
-                },
                 "id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "password_hash": {
                     "type": "string",
@@ -524,6 +512,10 @@ const docTemplate = `{
                 },
                 "user_status": {
                     "type": "integer"
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 255
                 }
             }
         }
