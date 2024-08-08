@@ -49,7 +49,11 @@ func ReadyRedisConnection() {
 }
 
 func ReadyLogger() {
-	logger.Replace(logger.New("./", "rmp", "debug", time.Hour*240, time.Hour*24, 100))
+	err := os.MkdirAll("./logs", os.ModePerm)
+	if err != nil {
+		return
+	}
+	logger.Replace(logger.New("./logs", "rmp", "debug", time.Hour*240, time.Hour*24, 100))
 	if logger.Log == nil {
 		panic(fmt.Errorf("log start error"))
 	}
