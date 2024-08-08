@@ -6,7 +6,6 @@ import (
 	"tuxiaocao/configs"
 	"tuxiaocao/middleware"
 	routes2 "tuxiaocao/routes"
-	"tuxiaocao/setup"
 	"tuxiaocao/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -29,13 +28,13 @@ import (
 // @in header
 // @name Authorization
 func main() {
-	err := godotenv.Load()
+	err := godotenv.Load("./.env")
 	if err != nil {
 		panic("config is not load" + err.Error())
 	}
 	// Define Fiber config.
 	config := configs.FiberConfig()
-	setup.InitAll()
+	InitAll()
 	// Define a new Fiber service with config.
 	app := fiber.New(config)
 	// Middlewares.
